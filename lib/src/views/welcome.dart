@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:zeroai/src/views/login.dart';
 
 import '../widgets/main_button.dart';
 
@@ -31,8 +32,9 @@ class Welcome extends StatelessWidget {
                   const SizedBox(
                     height: 29,
                   ),
-                  const AppElevatedButton(
-                    buttonLable: 'Label',
+                  AppElevatedButton(
+                    buttonLable: 'Login',
+                    onPressed: () => navigateToLogin(context),
                   ),
                   const SizedBox(
                     height: 16,
@@ -97,5 +99,10 @@ class Welcome extends StatelessWidget {
             ],
           )),
     );
+  }
+
+  void navigateToLogin(BuildContext context) {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => const Login()));
   }
 }

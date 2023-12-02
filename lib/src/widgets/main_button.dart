@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 
 class AppElevatedButton extends StatelessWidget {
   final String buttonLable;
-  final Widget? navigateTo;
+  final VoidCallback onPressed;
   const AppElevatedButton({
     super.key,
     required this.buttonLable,
-    this.navigateTo,
+    required this.onPressed,
   });
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => print("object"),
+      onTap: onPressed,
       child: Container(
         width: 342,
         height: 56,
@@ -30,15 +30,15 @@ class AppElevatedButton extends StatelessWidget {
           ),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
         ),
-        child: const Row(
+        child: Row(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
-              'Login ',
+              buttonLable,
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.white,
                 fontSize: 15,
                 fontFamily: 'Urbanist',
