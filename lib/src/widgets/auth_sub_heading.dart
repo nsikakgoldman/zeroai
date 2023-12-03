@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
-class LoginSubHeading extends StatelessWidget {
-  const LoginSubHeading({super.key});
+class AuthSubHeading extends StatelessWidget {
+  final String label;
+  const AuthSubHeading({super.key, required this.label});
 
   @override
   Widget build(BuildContext context) {

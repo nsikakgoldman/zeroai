@@ -17,6 +17,7 @@ class _AppEmailFieldState extends State<AppEmailField> {
       controller: widget.controller,
       keyboardType: TextInputType.emailAddress,
       decoration: InputDecoration(
+        contentPadding: const EdgeInsets.all(8),
         labelText: widget.label,
         border: const OutlineInputBorder(),
       ),

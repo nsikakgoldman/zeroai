@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:zeroai/src/util/macros.dart';
+import 'package:zeroai/src/views/forget_password.dart';
+import 'package:zeroai/src/views/onboarding.dart';
+import 'package:zeroai/src/widgets/all_social_media.dart';
 import 'package:zeroai/src/widgets/app_email_field.dart';
 import 'package:zeroai/src/widgets/app_password_field.dart';
-import 'package:zeroai/src/widgets/login_sub_heading.dart';
+import 'package:zeroai/src/widgets/auth_sub_heading.dart';
 import 'package:zeroai/src/widgets/main_button.dart';
-import 'package:zeroai/src/widgets/social_media_btn.dart';
 
 import 'register.dart';
 
@@ -22,81 +25,63 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: true,
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24),
-        child: Stack(children: [
-          Form(
-            key: _formKey,
-            child: ListView(
-              children: [
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.15,
-                ),
-                AppEmailField(
-                    label: 'Enter your email address', controller: _email),
-                const SizedBox(
-                  height: 16,
-                ),
-                AppPasswordField(
-                    label: "Enter your Password", controller: _password),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: TextButton(
-                      onPressed: () => print("hi"),
-                      child: const Text(
-                        'Forgot Password?',
-                        textAlign: TextAlign.right,
-                        style: TextStyle(
-                          color: Color(0xFF6A707C),
-                          fontSize: 14,
-                          fontFamily: 'Urbanist',
-                          fontWeight: FontWeight.w600,
-                          height: 0,
-                        ),
-                      )),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                AppElevatedButton(
-                    buttonLable: "Login", onPressed: _validateEmailFied),
-                const SizedBox(
-                  height: 32,
-                ),
-                const LoginSubHeading(),
-                const SizedBox(
-                  height: 16,
-                ),
-                const Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    SocialMediaButton(
-                      imagePath: 'google_icgoogle.png',
-                    ),
-                    SizedBox(
-                      width: 8,
-                    ),
-                    SocialMediaButton(
-                      imagePath: 'cib_appleapple.png',
-                    ),
-                    SizedBox(
-                      width: 8,
-                    ),
-                    SocialMediaButton(
-                      imagePath: 'facebook_ic.png',
-                    ),
-                  ],
-                )
-              ],
-            ),
+      resizeToAvoidBottomInset: false,
+      body: Stack(children: [
+        Form(
+          key: _formKey,
+          child: ListView(
+            padding: const EdgeInsets.symmetric(horizontal: horizontalPadding),
+            children: [
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.15,
+              ),
+              AppEmailField(
+                  label: 'Enter your email address', controller: _email),
+              const SizedBox(
+                height: 16,
+              ),
+              AppPasswordField(
+                  label: "Enter your Password", controller: _password),
+              Align(
+                alignment: Alignment.centerRight,
+                child: TextButton(
+                    onPressed: _forgetPasswordLogic,
+                    child: const Text(
+                      'Forgot Password?',
+                      textAlign: TextAlign.right,
+                      style: TextStyle(
+                        color: Color(0xFF6A707C),
+                        fontSize: 14,
+                        fontFamily: 'Urbanist',
+                        fontWeight: FontWeight.w600,
+                        height: 0,
+                      ),
+                    )),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              AppElevatedButton(
+                  buttonLable: "Login", onPressed: _validateEmailFied),
+              const SizedBox(
+                height: 32,
+              ),
+              const AuthSubHeading(label: "or login with"),
+              const SizedBox(
+                height: 16,
+              ),
+              const AllSocialMedia()
+            ],
           ),
-          Positioned(
-            bottom: 42,
-            left: 0,
-            right: 0,
-            child: InkWell(
-              onTap: () => print("hi"),
+        ),
+        Positioned(
+          bottom: 42,
+          left: 0,
+          right: 0,
+          child: InkWell(
+            onTap: _moveToRegister,
+            child: Align(
+              alignment: Alignment.center,
               child: RichText(
                 text: const TextSpan(
                   text: " Don't have an account?",
@@ -118,17 +103,30 @@ class _LoginState extends State<Login> {
                 ),
               ),
             ),
-          )
-        ]),
-      ),
+          ),
+        )
+      ]),
     );
   }
 
   void _validateEmailFied() {
     if (_formKey.currentState != null && _formKey.currentState!.validate()) {
       // Form is valid, perform actions here
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => const Register()));
+      Navigator.of(context)
+          .pushNamedAndRemoveUntil('/onboarding', (route) => false);
+      //   Navigator.push(
+      //       context, MaterialPageRoute(builder: (context) => const Onboarding()));
+      //
     }
+  }
+
+  void _forgetPasswordLogic() {
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => const ForgetPassword()));
+  }
+
+  void _moveToRegister() {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => const Register()));
   }
 }

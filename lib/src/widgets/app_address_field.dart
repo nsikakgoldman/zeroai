@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
 
-class AppTextField extends StatelessWidget {
+class AppAddressField extends StatefulWidget {
   final String label;
   final TextEditingController controller;
-  const AppTextField(
+
+  const AppAddressField(
       {super.key, required this.label, required this.controller});
 
+  @override
+  State<AppAddressField> createState() => _AppAddressFieldState();
+}
+
+class _AppAddressFieldState extends State<AppAddressField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
@@ -16,11 +22,13 @@ class AppTextField extends StatelessWidget {
 
         return null;
       },
-      controller: controller,
+      controller: widget.controller,
+      keyboardType: TextInputType.streetAddress,
       decoration: InputDecoration(
-          border: const OutlineInputBorder(),
-          labelText: label,
-          contentPadding: const EdgeInsets.all(8)),
+        contentPadding: const EdgeInsets.all(8),
+        labelText: widget.label,
+        border: const OutlineInputBorder(),
+      ),
     );
   }
 }

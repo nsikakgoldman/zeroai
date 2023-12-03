@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 
-class AppPasswordField extends StatefulWidget {
+class AppConfirmPasswordFiled extends StatefulWidget {
   final String label;
   final TextEditingController controller;
-  const AppPasswordField(
+  const AppConfirmPasswordFiled(
       {super.key, required this.label, required this.controller});
 
   @override
-  State<AppPasswordField> createState() => _AppPasswordFieldState();
+  State<AppConfirmPasswordFiled> createState() =>
+      _AppConfirmPasswordFiledState();
 }
 
-class _AppPasswordFieldState extends State<AppPasswordField> {
+class _AppConfirmPasswordFiledState extends State<AppConfirmPasswordFiled> {
   bool _obscureText = true;
   @override
   Widget build(BuildContext context) {
@@ -37,5 +38,6 @@ class _AppPasswordFieldState extends State<AppPasswordField> {
               icon: Icon(
                   _obscureText ? Icons.visibility : Icons.visibility_off))),
     );
+    ;
   }
 }

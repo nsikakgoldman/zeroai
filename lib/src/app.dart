@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:zeroai/src/bloc/theme_bloc.dart';
+import 'package:zeroai/src/views/onboarding.dart';
 import 'package:zeroai/src/views/splashscreen.dart';
 
 import 'model/theme_model.dart';
@@ -24,6 +25,9 @@ class App extends StatelessWidget {
       return MaterialApp(
         debugShowCheckedModeBanner: false,
         home: const SplashScreen(),
+        routes: {
+          '/onboarding': (context) => const Onboarding(),
+        },
         theme: _buildTheme(themeType),
       );
     });
