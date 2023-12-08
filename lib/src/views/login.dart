@@ -33,6 +33,8 @@ class _LoginState extends State<Login> {
   void _validateEmailFied() {
     if (_formKey.currentState != null && _formKey.currentState!.validate()) {
       // Form is valid, perform actions here
+      print(_email.value.text);
+      print(_password.value.text);
       setState(() {
         _loginFuntion = _login(_email.value.text, _password.value.text);
       });
@@ -57,7 +59,7 @@ class _LoginState extends State<Login> {
 
   Future<void> _login(String email, String password) async {
     try {
-      UserCredential userCredential = await FirebaseAuth.instance
+      await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
 
       _navigateToOnboardingScreen();
@@ -134,7 +136,9 @@ class _LoginState extends State<Login> {
                       case ConnectionState.none:
                         return _loginButton();
                       case ConnectionState.waiting:
-                        return const CircularProgressIndicator();
+                        return const Center(
+                          child: Text("Login in..."),
+                        );
                       case ConnectionState.active:
                         return const CircularProgressIndicator();
                       case ConnectionState.done:
@@ -156,41 +160,13 @@ class _LoginState extends State<Login> {
           bottom: 42,
           left: 0,
           right: 0,
-          child: InkWell(
-            onTap: _moveToRegister,
-            child: const Align(
-              alignment: Alignment.center,
-              child: Text.rich(
-                TextSpan(
-                  children: [
-                    TextSpan(
-                      text: 'Create account',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontFamily: 'Lato',
-                        fontWeight: FontWeight.w500,
-                        decoration: TextDecoration.underline,
-                        height: 0.09,
-                        letterSpacing: 0.50,
-                      ),
-                    ),
-                    TextSpan(
-                      text: ' or Login',
-                      style: TextStyle(
-                        color: Color(0xFF899BFF),
-                        fontSize: 16,
-                        fontFamily: 'Lato',
-                        fontWeight: FontWeight.w500,
-                        decoration: TextDecoration.underline,
-                        height: 0.09,
-                        letterSpacing: 0.50,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
+          child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+            TextButton(
+                onPressed: () => _moveToRegister(),
+                child: const Text("Create Account")),
+            TextButton(
+                onPressed: () => print("object"), child: const Text("Or Login"))
+          ]),
         )
       ]);
 }

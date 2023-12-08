@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:zeroai/src/util/macros.dart';
+import 'package:zeroai/src/views/login.dart';
+import 'package:zeroai/src/views/onboarding.dart';
 import 'package:zeroai/src/widgets/all_social_media.dart';
 import 'package:zeroai/src/widgets/app_address_field.dart';
 import 'package:zeroai/src/widgets/app_confirm_password_field.dart';
@@ -27,6 +29,7 @@ class _RegisterState extends State<Register> {
   final TextEditingController _password = TextEditingController();
   final TextEditingController _confirmPassword = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  Future? _registerFunction;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,8 +75,22 @@ class _RegisterState extends State<Register> {
                   AppConfirmPasswordFiled(
                       label: 'Confirm password', controller: _confirmPassword),
                   _fieldVerticalSpacing(),
-                  AppElevatedButton(
-                      buttonLable: "Sign up", onPressed: _validateEmailFied),
+                  FutureBuilder(
+                      future: _registerFunction,
+                      builder: (context, snapshot) {
+                        switch (snapshot.connectionState) {
+                          case ConnectionState.none:
+                            return _registerButton();
+                          case ConnectionState.waiting:
+                            return const Center(
+                              child: Text("Registering User..."),
+                            );
+                          case ConnectionState.active:
+                            return const Text("Registering User...");
+                          case ConnectionState.done:
+                            return _registerButton();
+                        }
+                      }),
                   _fieldVerticalSpacing(),
                   const AuthSubHeading(label: "Or Sign-up with"),
                   _fieldVerticalSpacing(),
@@ -85,6 +102,9 @@ class _RegisterState extends State<Register> {
     );
   }
 
+  Widget _registerButton() =>
+      AppElevatedButton(buttonLable: "Sign up", onPressed: _validateEmailFied);
+
   Widget _fieldVerticalSpacing() {
     return const SizedBox(
       height: 8,
@@ -94,30 +114,39 @@ class _RegisterState extends State<Register> {
   void _validateEmailFied() {
     if (_formKey.currentState != null && _formKey.currentState!.validate()) {
       // Form is valid, perform actions here
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => const Register()));
-    }
-
-    Future<void> _register(
-      String username,
-      String email,
-      String address,
-      String phoneNumber,
-      String password,
-    ) async {
-      try {
-        UserCredential userCredential = await FirebaseAuth.instance
-            .createUserWithEmailAndPassword(email: email, password: password);
-        String uid = userCredential.user!.uid;
-        await FirebaseFirestore.instance.collection('users').doc(uid).set({
-          'username': username,
-          'email': email,
-          'address': address,
-          'phoneNumber': phoneNumber,
+      if (_password.value.text == _confirmPassword.value.text) {
+        setState(() {
+          _registerFunction = _register(_username.value.text, _email.value.text,
+              _address.value.text, _phone.value.text, _password.value.text);
         });
-      } catch (e) {
-        print(e.toString());
       }
+      return;
+    }
+    return;
+  }
+
+  Future<void> _register(
+    String username,
+    String email,
+    String address,
+    String phoneNumber,
+    String password,
+  ) async {
+    try {
+      UserCredential userCredential = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(email: email, password: password);
+      String uid = userCredential.user!.uid;
+      await FirebaseFirestore.instance.collection('users').doc(uid).set({
+        'username': username,
+        'email': email,
+        'address': address,
+        'phoneNumber': phoneNumber,
+      }).then((value) => Navigator.push(
+          context, MaterialPageRoute(builder: (context) => const Login())));
+      return;
+    } catch (e) {
+      print(e.toString());
+      return;
     }
   }
 }
