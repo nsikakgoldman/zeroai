@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "285170464071",
+    "project_id": "zeroai-c8015",
+    "storage_bucket": "zeroai-c8015.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:285170464071:android:10c159f14617f9fa3b8862",
+        "android_client_info": {
+          "package_name": "com.example.zeroai"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBPKrB_-Uyhdv5yRgw5DhIZ4yXTBkjAkE8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

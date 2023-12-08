@@ -22,7 +22,6 @@ class Welcome extends StatelessWidget {
                       'Let your alternate intelligence create new  alternative service for you immediately',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        color: Colors.white,
                         fontSize: 30,
                         fontFamily: 'Urbanist',
                         fontWeight: FontWeight.w700,
@@ -69,7 +68,6 @@ class Welcome extends StatelessWidget {
                               TextSpan(
                                 text: 'Continue as a',
                                 style: TextStyle(
-                                  color: Color(0xFFFAFAFA),
                                   fontSize: 16,
                                   fontFamily: 'Lato',
                                   fontWeight: FontWeight.w500,

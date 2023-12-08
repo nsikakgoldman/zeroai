@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_masonry_view/flutter_masonry_view.dart';
+import 'package:zeroai/src/views/chatbox.dart';
 
 class Onboarding extends StatefulWidget {
   const Onboarding({super.key});
@@ -32,11 +33,17 @@ class _OnboardingState extends State<Onboarding> {
             numberOfColumn: 2,
             itemBuilder: (item) {
               return InkWell(
-                onTap: () => debugPrint("hi"),
+                onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => ChatBox(service: item["name"]))),
                 child: Column(
                   children: [
                     Image.asset("assets/${item['image']}"),
-                    Text("${item['name']}")
+                    ListTile(
+                      dense: true,
+                      title: Text("${item['name']}"),
+                    )
                   ],
                 ),
               );

@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:zeroai/src/util/macros.dart';
 import 'package:zeroai/src/widgets/all_social_media.dart';
@@ -9,6 +10,7 @@ import 'package:zeroai/src/widgets/app_tel_field.dart';
 import 'package:zeroai/src/widgets/app_text_field.dart';
 import 'package:zeroai/src/widgets/auth_sub_heading.dart';
 import 'package:zeroai/src/widgets/main_button.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Register extends StatefulWidget {
   const Register({super.key});
@@ -94,6 +96,28 @@ class _RegisterState extends State<Register> {
       // Form is valid, perform actions here
       Navigator.push(
           context, MaterialPageRoute(builder: (context) => const Register()));
+    }
+
+    Future<void> _register(
+      String username,
+      String email,
+      String address,
+      String phoneNumber,
+      String password,
+    ) async {
+      try {
+        UserCredential userCredential = await FirebaseAuth.instance
+            .createUserWithEmailAndPassword(email: email, password: password);
+        String uid = userCredential.user!.uid;
+        await FirebaseFirestore.instance.collection('users').doc(uid).set({
+          'username': username,
+          'email': email,
+          'address': address,
+          'phoneNumber': phoneNumber,
+        });
+      } catch (e) {
+        print(e.toString());
+      }
     }
   }
 }
