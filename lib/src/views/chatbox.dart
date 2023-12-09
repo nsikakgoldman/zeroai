@@ -28,15 +28,6 @@ class _ChatBoxState extends State<ChatBox> {
             padding: const EdgeInsets.only(right: 16),
             child: Row(
               children: <Widget>[
-                IconButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  icon: const Icon(
-                    Icons.arrow_back,
-                    color: Colors.black,
-                  ),
-                ),
                 const SizedBox(
                   width: 2,
                 ),
