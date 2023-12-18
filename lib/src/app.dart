@@ -30,7 +30,6 @@ class App extends StatelessWidget {
         routes: {
           '/onboarding': (context) => const Onboarding(),
           '/login': (context) => const Login(),
-          '/chatScreen': (context) => const ChatScreen(),
         },
         theme: _buildTheme(themeType),
       );

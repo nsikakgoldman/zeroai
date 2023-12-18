@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_masonry_view/flutter_masonry_view.dart';
-import 'package:zeroai/src/views/chatbox.dart';
+import 'package:zeroai/src/views/chat_body.dart';
 
 class Onboarding extends StatefulWidget {
   const Onboarding({super.key});
@@ -17,11 +17,8 @@ class _OnboardingState extends State<Onboarding> {
     {"name": "Health", "image": "pexels-chokniti-khongchum-2280551.jpg"},
     {"name": "Transport", "image": "pexels-aleksejs-bergmanis-681335.jpg"},
     {"name": "Travel", "image": "pexels-sheila-731217.jpg"},
-    {"name": "Shelter and Housing", "image": "pexels-paul-volkmer-3353801.jpg"},
-    {
-      "name": "Shelter and Public service",
-      "image": "pexels-volkan-vardar-3887985.jpg"
-    },
+    {"name": "Housing", "image": "pexels-paul-volkmer-3353801.jpg"},
+    {"name": "Public service", "image": "pexels-volkan-vardar-3887985.jpg"},
   ];
   @override
   Widget build(BuildContext context) {
@@ -36,7 +33,8 @@ class _OnboardingState extends State<Onboarding> {
                 onTap: () => Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => ChatBox(service: item["name"]))),
+                        builder: (context) =>
+                            ChatScreen(serviceName: item["name"]))),
                 child: Column(
                   children: [
                     Image.asset("assets/${item['image']}"),

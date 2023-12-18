@@ -45,7 +45,7 @@ class _LoginState extends State<Login> {
   }
 
   void _navigateToOnboardingScreen() => Navigator.of(context)
-      .pushNamedAndRemoveUntil('/chatScreen', (route) => false);
+      .pushNamedAndRemoveUntil('/onboarding', (route) => false);
 
   void _forgetPasswordLogic() {
     Navigator.push(context,
